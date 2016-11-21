@@ -100,13 +100,13 @@ try:
                 pass
 
 
-        """
+        # mark these lines below if you don't need to display and the car will get faster
         cv2.imshow("Frame", frame)
         key = cv2.waitKey(1) & 0xFF
 
         if key == ord("q"):
             break
-        """
+        # mark these lines above if you don't need to display and the car will get faster
 
 finally:
         motor.cleanup()

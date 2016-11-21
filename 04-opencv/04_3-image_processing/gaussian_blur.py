@@ -36,10 +36,10 @@ except:
 
 
 cv2.imshow("Normal", image)
+cv2.waitKey(0)
 
 blur = cv2.GaussianBlur(image, (9,9), 0)
 cv2.imshow("GaussianBlur", blur)
-
 cv2.waitKey(0)
 
 try:

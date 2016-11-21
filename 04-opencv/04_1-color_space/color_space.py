@@ -37,18 +37,22 @@ except:
 
 
 cv2.imshow("Normal", image)
+cv2.waitKey(0)
 
 # Convert BGR to Gray
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 cv2.imshow("Gray", gray)
+cv2.waitKey(0)
 
 # Threshold the gray image to binary image
 (_, binary) = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
 cv2.imshow("Binary", binary)
+cv2.waitKey(0)
 
 # Convert BGR to HSV
 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 cv2.imshow("HSV", hsv)
+cv2.waitKey(0)
 
 # Define range of purple color in HSV
 lower = np.array([141, 0, 0])
@@ -57,11 +61,11 @@ upper = np.array([164, 145, 197])
 # Threshold the HSV image to get only purple colors
 mask = cv2.inRange(hsv, lower, upper)
 cv2.imshow("Mask", mask)
+cv2.waitKey(0)
 
 # Bitwise-AND mask and original image
 bitwise = cv2.bitwise_and(image, image, mask=mask)
 cv2.imshow("Bitwise", bitwise)
-
 cv2.waitKey(0)
 
 try:
