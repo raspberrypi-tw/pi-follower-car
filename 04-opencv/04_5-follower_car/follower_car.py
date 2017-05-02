@@ -15,13 +15,13 @@
 # Usage  : python follower_car.py
 
 import cv2
-import pwm_motor as motor
-#import dc_motor as motor
+#import pwm_motor as motor
+import dc_motor as motor
 
 Color_Lower = (36, 130,46)
 Color_Upper = (113, 255, 255)
-Frame_Width  = 640
-Frame_Height = 480
+Frame_Width  = 320
+Frame_Height = 240
 
 camera = cv2.VideoCapture(0)
 camera.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,  Frame_Width)
@@ -70,32 +70,27 @@ try:
                 # mass center
                 center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
-                if radius > 10:
-                    cv2.circle(frame, (int(x), int(y)), int(radius),(0, 255, 255), 2)
-                    cv2.circle(frame, center, 5, (0, 0, 255), -1)
+                # process every frame
+                cv2.circle(frame, (int(x), int(y)), int(radius),(0, 255, 255), 2)
+                cv2.circle(frame, center, 5, (0, 0, 255), -1)
 
+                # Forward and backward rule
+                if radius < 90:
+                    motor.forward()
+                elif radius > 100:
+                   motor.backward()
+                else:
+                   motor.stop()
 
-                    # Forward and backward rule
-                    if radius < 90:
-                        motor.forward()
+                # turn right and turn left rule
+                if center[0] > Frame_Width/2 + 10:
+                    motor.turnRight()
+                elif center[0] < Frame_Width/2 - 10:
+                    motor.turnLeft()
+                else:
+                    motor.stop()
 
-                    elif radius > 100:
-                        motor.backward()
-
-                    else:
-                       motor.stop()
-
-
-                    # Turn right and turn left rule
-                    if center[0] > Frame_Width/2 + 10:
-                        motor.turnRight()
-
-                    elif center[0] < Frame_Width/2 - 10:
-                        motor.turnLeft()
-
-                    else:
-                       motor.stop()
-
+            # if not find mass center
             except:
                 pass
 
